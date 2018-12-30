@@ -14,6 +14,21 @@
           center: {lat: -34.397, lng: 150.644},
           zoom: 8
         });
+
+       var tribeca = {lat: 40.719526, lng: -74.0089934};
+       var marker = new google.maps.Marker({
+       	position: tribeca,
+       	map: map,
+       	title: "First Marker"
+       });
+
+       var infowindow = new google.maps.InfoWindow({
+       	content: "Hey there!"
+       });
+
+       marker.addListener("click", function() {
+       	infowindow.open(map, marker);
+       });
      }
    </script>
    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtw2Wd_f_Wr3Hi9tILlcMby9BVJ7MGdDg&callback=initMap"
