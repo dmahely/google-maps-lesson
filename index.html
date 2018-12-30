@@ -10,25 +10,42 @@
    <script>
      var map;
      function initMap() {
-       map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 8
-        });
 
-       var tribeca = {lat: 40.719526, lng: -74.0089934};
-       var marker = new google.maps.Marker({
-       	position: tribeca,
-       	map: map,
-       	title: "First Marker"
-       });
+     	var markers = [];
+     	map = new google.maps.Map(document.getElementById('map'), {
+     		center: {lat: 40.7413549, lng: -73.9980244},
+     		zoom: 8
+     	});
 
-       var infowindow = new google.maps.InfoWindow({
-       	content: "Hey there!"
-       });
+     	var locations = [
+     	{title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
+     	{title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}}
+     	];
 
-       marker.addListener("click", function() {
-       	infowindow.open(map, marker);
-       });
+     	var largeInfowindow = new google.maps.InfoWindow();
+     	var bounds = new google.maps.LatLngBounds();
+
+     	// creates an array of markers on init
+
+     	for(var i = 0; i < locations.length; i++) {
+
+     		var position = locations[i].location;
+     		var title = locations[i].title;
+
+     		var marker = new google.maps.Marker({
+     			map: map,
+     			position: position,
+     			title: title,
+     			animation: google.maps.Animation.DROP,
+     			id: i
+     		});
+
+     		markers.push(marker);
+     		bounds.extend(marker.position);
+     		marker.addListener('click', function() {
+     			populateInfoWindow(this, largeInfowindow);
+     		});
+     	}
      }
    </script>
    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtw2Wd_f_Wr3Hi9tILlcMby9BVJ7MGdDg&callback=initMap"
